@@ -1,0 +1,33 @@
+version: 3
+
+tasks:
+  go:install:
+  - sudo apt install -y golang-go
+  
+  go:init:
+    dir: app
+    cmds:
+    - go mod init goke
+
+  go:env:
+    dir: app
+    cmds:
+    - go env
+
+  go:requirements:
+    dir: app
+    cmds:
+    - go mod tidy
+
+  app:install:
+    dir: app
+    cmds:
+    - go install
+
+  app:run:local:
+    dir: app
+    cmds:
+    - go run main.go
+
+  go:delete-downlaoded-modules:
+  - go clean -modcache
