@@ -3,3 +3,15 @@ version: 3
 tasks:
   test:
   - go test -v ./...
+
+  cobra:install:
+  - go install github.com/spf13/cobra-cli
+
+  cobra:init:
+  - cobra-cli init --author "Krzysztof Wiatrzyk" --viper --license "Apache 2.0"
+
+  cobra:add:command:
+  - cobra-cli add {{ .CLI_ARGS }}
+
+  run:
+  - go run main.go run

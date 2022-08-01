@@ -1,9 +1,23 @@
 version: 3
 
 tasks:
+  gum:install: 
+  - |
+    echo 'deb [trusted=yes] https://repo.charm.sh/apt/ /' | sudo tee /etc/apt/sources.list.d/charm.list
+    sudo apt update && sudo apt install gum
+
   go:install:
   - sudo apt install -y golang-go
-  
+
+  go:install:advanced:
+  - wget -nc https://go.dev/dl/go1.18.5.linux-amd64.tar.gz
+  - defer: rm go1.18.5.linux-amd64.tar.gz
+  - sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.18.5.linux-amd64.tar.gz
+  - >
+    gum style 'export PATH=$PATH:/usr/local/go/bin'
+    --foreground 212 --border-foreground 212 --border double
+    --align center --width 50 --margin "1 2" --padding "2 4" 
+
   go:init:
     dir: app
     cmds:
