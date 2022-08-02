@@ -51,6 +51,21 @@ tasks:
 
   pre-commit:install-hooks:
   - pre-commit install
+  - pre-commit install -t commit-msg
 
   pre-commit:run-hooks:
-  - pre-commit- run --all-files
+  - pre-commit run --all-files
+
+  git:commit:
+    vars:
+      TYPE:
+        sh: gum choose feat fix docs
+      SCOPE:
+        sh: gum input --placeholder "Scope"
+      MESSAGE:
+        sh: gum input --placeholder "Message"
+    cmds:
+    - git add .
+    - >
+      git commit -m "{{ .TYPE }}({{ .SCOPE }}): {{ .MESSAGE }}"
+    - git push origin main
