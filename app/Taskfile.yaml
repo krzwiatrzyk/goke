@@ -15,3 +15,9 @@ tasks:
 
   run:
   - go run main.go run
+
+  build:container:
+  - docker image build . -t goke:0.0.1-dev
+
+  run:container:
+  - docker container run -p 3000:3000 --rm goke:0.0.1-dev run -m http
