@@ -79,5 +79,9 @@ tasks:
       git commit -m "{{ .TYPE }}({{ .SCOPE }}): {{ .MESSAGE }}"
     - git push origin main
 
+  git:fix:
+  - find .git/objects/ -size 0 -exec rm -f {} \;
+  - git fetch origin
+
   sync:
   - vendir sync

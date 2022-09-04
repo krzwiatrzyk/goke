@@ -51,7 +51,11 @@ func run() {
 		runGin()
 	case "http":
 		runHttp()
+	default:
+		panic(fmt.Errorf("select one of available modes: gin | http"))
 	}
+
+
 }
 
 func runGin() {
