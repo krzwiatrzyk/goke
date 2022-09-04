@@ -1,0 +1,24 @@
+version: 3
+
+tasks:
+  create:
+    vars:
+      CONFIG: '{{ .CONFIG | default "minimal" }}'
+    cmds:
+    - k3d cluster create {{ .CLUSTER_NAME }} --config configs/{{ .CONFIG }}.yaml
+    - kubectl rollout status -n kube-system deployment/coredns --timeout 1m
+    - kubectl rollout status -n kube-system deployment/metrics-server --timeout 1m
+    status:
+    - k3d cluster list | grep {{ .CLUSTER_NAME }}
+ 
+  start:
+    cmds:
+    - k3d cluster start {{ .CLUSTER_NAME }}
+  
+  stop:
+    cmds:
+    - k3d cluster stop {{ .CLUSTER_NAME }}
+
+  delete:
+    cmds:
+    - k3d cluster delete {{ .CLUSTER_NAME }}

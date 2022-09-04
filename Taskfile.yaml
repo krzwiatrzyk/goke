@@ -1,6 +1,15 @@
 version: 3
 
+includes:
+  tools: modules/tools.yaml
+  k3d:
+    taskfile: vendir/k3d/Taskfile.yaml
+    dir: vendir/k3d
+
 tasks:
+  dev:
+  - task: k3d:create
+
   gum:install:
   - |
     echo 'deb [trusted=yes] https://repo.charm.sh/apt/ /' | sudo tee /etc/apt/sources.list.d/charm.list
@@ -69,3 +78,6 @@ tasks:
     - >
       git commit -m "{{ .TYPE }}({{ .SCOPE }}): {{ .MESSAGE }}"
     - git push origin main
+
+  sync:
+  - vendir sync

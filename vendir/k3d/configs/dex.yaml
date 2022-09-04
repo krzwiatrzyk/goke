@@ -1,0 +1,51 @@
+
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+servers: 1 
+agents: 0 
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+volumes: # repeatable flags are represented as YAML lists
+  - volume: /home/krzwiatrzyk/Repos/clusters/krzwiatrzyk.minimal/modules/dex/ssl/ca.pem:/etc/ssl/certs/openid-ca.pem 
+    nodeFilters:
+      - server:0
+options:
+  k3s:
+    extraArgs:
+    - arg: --disable=traefik
+      nodeFilters:
+      - server:0
+    - arg: --disable=local-storage
+      nodeFilters:
+      - server:0
+    - arg: --tls-san=kubernetes.localhost
+      nodeFilters:
+      - server:0
+    - arg: --kube-apiserver-arg=oidc-issuer-url=https://dex.192.168.56.103.nip.io
+      nodeFilters:
+      - server:0
+    - arg: --kube-apiserver-arg=oidc-client-id=kubernetes-local
+      nodeFilters:
+      - server:0
+    - arg: --kube-apiserver-arg=oidc-ca-file=/etc/ssl/certs/openid-ca.pem
+      nodeFilters:
+      - server:0
+    - arg: --kube-apiserver-arg=oidc-username-claim=email
+      nodeFilters:
+      - server:0
+    # - arg: --kube-apiserver-arg=oidc-groups-claim=groups
+    #   nodeFilters:
+    #   - server:0
+
+
+
+# --oidc-issuer-url=https://dex.example.com:32000
+# --oidc-client-id=example-app
+# --oidc-ca-file=/etc/ssl/certs/openid-ca.pem
+# --oidc-username-claim=email
+# --oidc-groups-claim=groups
