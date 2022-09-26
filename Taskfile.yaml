@@ -5,10 +5,21 @@ includes:
   k3d:
     taskfile: vendir/k3d/Taskfile.yaml
     dir: vendir/k3d
+    vars:
+      CLUSTER_NAME: goke
 
 tasks:
-  dev:
+  dev:helm:
   - task: k3d:create
+  - task: tilt:start:helm
+  - defer: 
+      task: k3d:delete
+
+  dev:compose:
+  - task: tilt:start:compose
+
+  tilt:start:compose: tilt up -f tiltfiles/Tiltfile.compose
+  tilt:start:helm: tilt up -f tiltfiles/Tiltfile.helm
 
   gum:install:
   - |
@@ -51,6 +62,11 @@ tasks:
     dir: app
     cmds:
     - go run main.go
+
+  app:build:
+    dir: app
+    cmds:
+    - go build . 
 
   go:delete-downlaoded-modules:
   - go clean -modcache

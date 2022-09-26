@@ -16,8 +16,12 @@ tasks:
   run:
   - go run main.go run
 
-  build:container:
+  build:image:
   - docker image build . -t goke:0.0.1-dev
+
+  push:image:
+  - docker tag goke:0.0.1-dev witcherek7/goke:0.0.1-dev
+  - docker push witcherek7/goke:0.0.1-dev
 
   run:container:
   - docker container run -p 3000:3000 --rm goke:0.0.1-dev run -m http
