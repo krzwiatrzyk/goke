@@ -14,7 +14,6 @@ COPY . .
 RUN go build -o goke
 
 
-
 FROM gcr.io/distroless/base-debian10
 
 WORKDIR /app

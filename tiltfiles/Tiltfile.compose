@@ -1,8 +1,8 @@
-docker_build('goke', './app', 
-    dockerfile='app/Dockerfile'
+docker_build('goke', '../app', 
+    dockerfile='../app/Dockerfile'
     #only=["cmd","config","static","templates"]    
 )
-docker_compose('docker-compose.yml')
+docker_compose('../docker-compose.yml')
 
 # load('ext://helm_resource', 'helm_resource', 'helm_repo')
 # helm_repo('bitnami', 'https://charts.bitnami.com/bitnami')
