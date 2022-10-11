@@ -101,3 +101,12 @@ tasks:
 
   sync:
   - vendir sync
+
+  devbox:init:
+    cmds:
+    - devbox init
+    - devbox add go_1_18
+  
+  devbox:shell:
+    cmds:
+    - devbox shell

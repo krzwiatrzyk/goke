@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "go_1_18"
+  ],
+  "shell": {
+    "init_hook": null
+  }
+}
