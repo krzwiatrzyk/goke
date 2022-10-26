@@ -1,0 +1,14 @@
+version: 3
+
+tasks:
+  install:
+    cmds:
+    - wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
+    status:
+    - command -v dapr
+
+  local: dapr init
+  
+  local:dashboard: dapr dashboard
+
+

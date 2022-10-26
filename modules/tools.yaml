@@ -1,5 +1,10 @@
 version: 3
 
+includes:
+  dapr: 
+    taskfile: dapr/Taskfile.yaml
+    dir: dapr
+ 
 tasks:
   install:tilt:
   install:vendir:

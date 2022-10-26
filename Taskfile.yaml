@@ -1,7 +1,11 @@
 version: 3
 
 includes:
+  dev: modules/dev.yaml
   tools: modules/tools.yaml
+  app: 
+    taskfile: app/Taskfile.yaml
+    dir: app
   k3d:
     taskfile: vendir/k3d/Taskfile.yaml
     dir: vendir/k3d
@@ -9,6 +13,9 @@ includes:
       CLUSTER_NAME: goke
 
 tasks:
+  default: 
+  - task -a | grep "{{ .CLI_ARGS }}"
+
   dev:helm:
   - task: k3d:create
   - task: tilt:start:helm
@@ -37,39 +44,6 @@ tasks:
     gum style 'export PATH=$PATH:/usr/local/go/bin'
     --foreground 212 --border-foreground 212 --border double
     --align center --width 50 --margin "1 2" --padding "2 4"
-
-  go:init:
-    dir: app
-    cmds:
-    - go mod init goke
-
-  go:env:
-    dir: app
-    cmds:
-    - go env
-
-  go:requirements:
-    dir: app
-    cmds:
-    - go mod tidy
-
-  app:install:
-    dir: app
-    cmds:
-    - go install
-
-  app:run:local:
-    dir: app
-    cmds:
-    - go run main.go
-
-  app:build:
-    dir: app
-    cmds:
-    - go build . 
-
-  go:delete-downlaoded-modules:
-  - go clean -modcache
 
   pre-commit:install:
   - pip install pre-commit

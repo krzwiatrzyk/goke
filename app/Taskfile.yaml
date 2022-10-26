@@ -5,16 +5,19 @@ tasks:
   - go test -v ./...
 
   cobra:install:
-  - go install github.com/spf13/cobra-cli
+    cmds:
+    - go install github.com/spf13/cobra-cli
+    status:
+    - command -v cobra-cli
 
   cobra:init:
   - cobra-cli init --author "Krzysztof Wiatrzyk" --viper --license "Apache 2.0"
 
   cobra:add:command:
-  - cobra-cli add {{ .CLI_ARGS }}
-
-  run:
-  - go run main.go run
+    deps:
+    - cobra:install
+    cmds:
+    - cobra-cli add {{ .CLI_ARGS }}
 
   build:image:
   - docker image build . -t goke:0.0.1-dev
@@ -23,5 +26,37 @@ tasks:
   - docker tag goke:0.0.1-dev witcherek7/goke:0.0.1-dev
   - docker push witcherek7/goke:0.0.1-dev
 
+  run:local:
+    cmds:
+    - go run main.go run
+
   run:container:
   - docker container run -p 3000:3000 --rm goke:0.0.1-dev run -m http
+
+  init:
+    cmds:
+    - go mod init goke
+
+  env:
+    cmds:
+    - go env
+
+  requirements:
+    cmds:
+    - go mod tidy
+
+  install:
+    cmds:
+    - go install
+    
+  build:
+    cmds:
+    - go build .
+    sources:
+    - cmd/*
+    - modules/**/*
+    generates:
+    - goke
+
+  delete-downlaoded-modules:
+  - go clean -modcache

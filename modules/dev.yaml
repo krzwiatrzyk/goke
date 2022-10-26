@@ -1,0 +1,18 @@
+version: 3
+
+tasks:
+  dapr:
+    cmds:
+    - task: :app:build
+    - >
+      dapr run --app-id goke 
+      --dapr-http-port 3500 --app-port 3000 --app-protocol http
+      --components-path chart/templates/dapr-components
+      -- app/goke dapr
+    preconditions:
+      - test -f app/goke
+
+  dapr:get:secret: curl http://localhost:3500/v1.0/secrets/goke/secret 
+
+  curl:subscriptions: curl http://localhost:3000/dapr/subscribe | jq
+  curl:publish: echo "fun" | curl -X POST http://localhost:3000/queue/publish

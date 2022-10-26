@@ -35,6 +35,7 @@ var rootCmd = &cobra.Command{
 
 GoKE is a project to test development process and to better understand struggles with software delivery.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("GoKE. Please select mode with ")
 		showConfig()
 	},
 }
