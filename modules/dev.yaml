@@ -16,3 +16,6 @@ tasks:
 
   curl:subscriptions: curl http://localhost:3000/dapr/subscribe | jq
   curl:publish: echo "fun" | curl -X POST http://localhost:3000/queue/publish
+  http:subscriptions: http http://localhost:3000/dapr/subscribe | jq
+  http:publish: echo "fun" | http POST http://localhost:3000/queue/publish
+  http:subscribe: http http://localhost:3000/queue/subscribe

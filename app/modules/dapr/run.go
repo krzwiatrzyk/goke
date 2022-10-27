@@ -3,6 +3,8 @@ package dapr
 import (
 	// "context"
 	"fmt"
+	"log"
+
 	// "log"
 	"net/http"
 	"time"
@@ -10,24 +12,26 @@ import (
 	dapr "github.com/dapr/go-sdk/client"
 	// "github.com/dapr/go-sdk/service/common"
 	// daprd "github.com/dapr/go-sdk/service/http"
+	
 	"github.com/gin-gonic/gin"
 )
 
 var daprClient dapr.Client
 
-var (
-	PUBSUB_NAME = "queue"
-	PUBSUB_TOPIC = "goke"
-)
+
+func init() {
+	fmt.Println("Init function called.")
+}
 
 func Run() {
-	daprClient, err := dapr.NewClient()
+	initDaprClient, err := dapr.NewClient()
 	if err != nil {
-		panic(err)
+		log.Fatalf("Error initializing daprClient: %s", err)
 	}
+	daprClient = initDaprClient
 	defer daprClient.Close()
 
-    go runGin()
+	go runGin()
 
 	for {
 		time.Sleep(time.Second * time.Duration(5))
@@ -36,48 +40,19 @@ func Run() {
 }
 
 func runGin() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+	g := gin.Default()
+	g.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
 	})
 
-	r.POST("/queue/publish", publish)
-	r.GET("/queue/subscribe", subscribe)
-	r.GET("/dapr/subscribe", informDaprSubscribe)
+	ginRegisterPubSub(g)
 
-	r.Run(fmt.Sprintf(":%d", 3000))
+	g.Run(fmt.Sprintf(":%d", 3000))
 }
 
-func publish(c *gin.Context) {
-	if err := daprClient.PublishEvent(c, PUBSUB_NAME, PUBSUB_TOPIC, c.Request.Body); err != nil {
-		c.Status(http.StatusInternalServerError)
-		panic(err)
-	}
 
-	c.Status(http.StatusOK)
-}
-
-func informDaprSubscribe(c *gin.Context) {
-  response := []map[string]interface{}{
-	{
-		"pubsubname": PUBSUB_NAME,
-		"topic": PUBSUB_TOPIC,
-		"route": "/queue/subscribe",
-		"metadata": map[string]string{
-			"rawPayload": "true",
-		},
-	},
-  }
-
-  c.JSON(http.StatusOK,response)
-}
-
-func subscribe(c *gin.Context) {
-	fmt.Println(c.Request.Body)
-	c.Status(http.StatusOK)
-}
 
 // func runDapr() {
 // 	sub := &common.Subscription{
@@ -85,7 +60,6 @@ func subscribe(c *gin.Context) {
 // 		Topic:      PUBSUB_TOPIC,
 // 		Route:      "/events",
 // 	}
-
 
 // 	s := daprd.NewService(":" + "3001")
 
