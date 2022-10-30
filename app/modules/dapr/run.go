@@ -48,6 +48,7 @@ func runGin() {
 	})
 
 	ginRegisterPubSub(g)
+	ginRegisterStateStore(g)
 
 	g.Run(fmt.Sprintf(":%d", 3000))
 }

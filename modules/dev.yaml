@@ -2,8 +2,11 @@ version: 3
 
 tasks:
   dapr:
+    deps:
+    - :tools:dapr:local
+    - :app:build
     cmds:
-    - task: :app:build
+    # - task: :app:build
     - >
       dapr run --app-id goke 
       --dapr-http-port 3500 --app-port 3000 --app-protocol http
@@ -19,3 +22,5 @@ tasks:
   http:subscriptions: http http://localhost:3000/dapr/subscribe | jq
   http:publish: echo "fun" | http POST http://localhost:3000/queue/publish
   http:subscribe: http http://localhost:3000/queue/subscribe
+  http:store: echo -n "store this 1" | http http://localhost:3000/store/key1
+  http:retrieve: http http://localhost:3000/retrieve/key1

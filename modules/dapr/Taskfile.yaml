@@ -7,7 +7,13 @@ tasks:
     status:
     - command -v dapr
 
-  local: dapr init
+  local: 
+    deps:
+    - install
+    cmds:
+    - dapr init
+    status:
+    - docker ps | grep dapr
   
   local:dashboard: dapr dashboard
 

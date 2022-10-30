@@ -1,0 +1,21 @@
+version: 3
+
+tasks:
+  install:
+    cmds:
+    - sh <(curl -L https://nixos.org/nix/install) --no-daemon
+    - curl -fsSL https://get.jetpack.io/devbox | bash
+    status:
+    - command -v nix
+    - command -v docker
+    - command -v devbox
+
+  init:
+    cmds:
+    - devbox init
+    - devbox add go_1_18
+
+  
+  shell:
+    cmds:
+    - devbox shell

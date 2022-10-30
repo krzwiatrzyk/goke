@@ -4,7 +4,9 @@ includes:
   dapr: 
     taskfile: dapr/Taskfile.yaml
     dir: dapr
- 
+  devbox: devbox/Taskfile.yaml
+  httpie: httpie/Taskfile.yaml
+
 tasks:
   install:tilt:
   install:vendir:
