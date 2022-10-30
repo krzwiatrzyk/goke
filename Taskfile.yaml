@@ -11,6 +11,9 @@ includes:
     dir: vendir/k3d
     vars:
       CLUSTER_NAME: goke
+  tests:
+    dir: tests 
+    taskfile: tests/Taskfile.yaml
 
 tasks:
   default: 
