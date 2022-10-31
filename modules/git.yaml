@@ -25,6 +25,7 @@ tasks:
   pre-commit:run-hooks:
   - pre-commit run --all-files
 
+
   commit:
     deps:
     - pre-commit:install
