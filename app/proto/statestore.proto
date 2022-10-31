@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "goke/proto";
+
+package dapr;
+
+service StateStore {
+  rpc Store(State) returns(Confirm) {}
+  rpc Retrieve(State) returns(State) {}   
+}
+
+message State {
+    string key = 1;
+    string value = 2;
+}
+
+message Confirm {
+    bool ok = 1;
+}

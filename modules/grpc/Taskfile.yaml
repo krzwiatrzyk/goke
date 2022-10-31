@@ -1,0 +1,8 @@
+version: 3
+
+tasks:
+  grpcui:install:
+    cmds:
+    - go install github.com/fullstorydev/grpcui/cmd/grpcui@latest
+    status:
+    - command -v grpcui

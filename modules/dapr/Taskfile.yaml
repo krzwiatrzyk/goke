@@ -16,5 +16,5 @@ tasks:
     - docker ps | grep dapr
   
   local:dashboard: dapr dashboard
-
+  local:zipkin: firefox http://localhost:9411/zipkin/ 
 

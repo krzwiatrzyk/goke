@@ -9,7 +9,23 @@ tasks:
     # - task: :app:build
     - >
       dapr run --app-id goke 
-      --dapr-http-port 3500 --app-port 3000 --app-protocol http
+      --dapr-http-port 3500 --dapr-grpc-port 3501
+      --app-port 3000 --app-protocol http
+      --components-path chart/templates/dapr-components
+      -- app/goke dapr
+    preconditions:
+      - test -f app/goke
+
+  dapr:grpc:
+    deps:
+    - :tools:dapr:local
+    - :app:build
+    cmds:
+    # - task: :app:build
+    - >
+      dapr run --app-id goke 
+      --dapr-http-port 3500 --dapr-grpc-port 3501
+      --app-port 3001 --app-protocol grpc
       --components-path chart/templates/dapr-components
       -- app/goke dapr
     preconditions:
@@ -24,3 +40,28 @@ tasks:
   http:subscribe: http http://localhost:3000/queue/subscribe
   http:store: echo -n "store this 1" | http http://localhost:3000/store/key1
   http:retrieve: http http://localhost:3000/retrieve/key1
+  http:invoke:ping: http http://localhost:3000/invoke/ping
+  http:invoke:grpc: http http://localhost:3000/invoke/grpc
+
+
+  
+  grpc:requirements:
+  - go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+  - go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+  grpc:install:compiler:
+    cmds:
+    - sudo  apt install -y protobuf-compiler
+    status:
+    - protoc
+  grpc:generate: 
+    deps:
+    - grpc:install:compiler
+    cmds: 
+    - |
+      protoc --go_out=. --go_opt=paths=source_relative \
+      --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+      app/proto/statestore.proto --experimental_allow_proto3_optional
+  grpc:ui: grpcui -plaintext localhost:3001
+
+
+  invoke:ping: dapr invoke --app-id goke --verb GET --method ping

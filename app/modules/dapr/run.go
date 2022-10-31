@@ -32,10 +32,11 @@ func Run() {
 	defer daprClient.Close()
 
 	go runGin()
+	go runStateServer()
 
 	for {
-		time.Sleep(time.Second * time.Duration(5))
-		fmt.Println("Sleep for 5 seconds...")
+		time.Sleep(time.Minute * time.Duration(1))
+		fmt.Println("Sleeping...")
 	}
 }
 
@@ -49,6 +50,7 @@ func runGin() {
 
 	ginRegisterPubSub(g)
 	ginRegisterStateStore(g)
+	ginRegisterInvokation(g)
 
 	g.Run(fmt.Sprintf(":%d", 3000))
 }

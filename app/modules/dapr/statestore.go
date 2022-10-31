@@ -21,7 +21,7 @@ func store(c *gin.Context) {
 	if err := daprClient.SaveState(c, STORE_NAME, key, value, nil); err != nil {
 		panic(err)
 	}
-	
+	c.Status(http.StatusOK)
 }
 
 func retrieve(c *gin.Context) {
