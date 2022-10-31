@@ -1,0 +1,46 @@
+version: 3
+
+tasks:
+  pip:install:
+    cmds:
+    - sudo apt install -y pip
+    status:
+    - command -v pip
+
+  pre-commit:install:
+    deps:
+    - pip:install
+    cmds:
+    - pip install pre-commit
+    status:
+    - command -v pre-commit
+
+  pre-commit:install-hooks:
+    deps:
+    - pre-commit:install 
+    cmds:
+    - pre-commit install
+    - pre-commit install -t commit-msg
+
+  pre-commit:run-hooks:
+  - pre-commit run --all-files
+
+  commit:
+    deps:
+    - pre-commit:install
+    vars:
+      TYPE:
+        sh: gum choose feat fix docs
+      SCOPE:
+        sh: gum input --placeholder "Scope"
+      MESSAGE:
+        sh: gum input --placeholder "Message"
+    cmds:
+    - git add .
+    - >
+      git commit -m "{{ .TYPE }}({{ .SCOPE }}): {{ .MESSAGE }}"
+    - git push origin main
+
+  git:fix:
+  - find .git/objects/ -size 0 -exec rm -f {} \;
+  - git fetch origin

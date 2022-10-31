@@ -1,7 +1,8 @@
 {
   "packages": [
     "go_1_18",
-    "hurl"
+    "hurl",
+    "gum"
   ],
   "shell": {
     "init_hook": null

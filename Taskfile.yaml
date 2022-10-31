@@ -1,6 +1,7 @@
 version: 3
 
 includes:
+  git: modules/git.yaml
   dev: modules/dev.yaml
   tools: modules/tools.yaml
   app: 
@@ -48,33 +49,7 @@ tasks:
     --foreground 212 --border-foreground 212 --border double
     --align center --width 50 --margin "1 2" --padding "2 4"
 
-  pre-commit:install:
-  - pip install pre-commit
 
-  pre-commit:install-hooks:
-  - pre-commit install
-  - pre-commit install -t commit-msg
-
-  pre-commit:run-hooks:
-  - pre-commit run --all-files
-
-  git:commit:
-    vars:
-      TYPE:
-        sh: gum choose feat fix docs
-      SCOPE:
-        sh: gum input --placeholder "Scope"
-      MESSAGE:
-        sh: gum input --placeholder "Message"
-    cmds:
-    - git add .
-    - >
-      git commit -m "{{ .TYPE }}({{ .SCOPE }}): {{ .MESSAGE }}"
-    - git push origin main
-
-  git:fix:
-  - find .git/objects/ -size 0 -exec rm -f {} \;
-  - git fetch origin
 
   sync:
   - vendir sync
