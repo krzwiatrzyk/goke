@@ -1,3 +1,4 @@
+{{ if .Values.extensions.dapr }}
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
@@ -13,3 +14,4 @@ spec:
     value: ""
   - name: actorStateStore
     value: "true"
+{{ end }}

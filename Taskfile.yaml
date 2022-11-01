@@ -1,9 +1,10 @@
 version: 3
 
 includes:
-  git: modules/git.yaml
-  dev: modules/dev.yaml
-  tools: modules/tools.yaml
+  deploy: deploy/Taskfile.yaml
+  git: tasks/git.yaml
+  dev: tasks/dev.yaml
+  tools: tasks/tools.yaml
   app: 
     taskfile: app/Taskfile.yaml
     dir: app
@@ -28,9 +29,6 @@ tasks:
 
   dev:compose:
   - task: tilt:start:compose
-
-  tilt:start:compose: tilt up -f tiltfiles/Tiltfile.compose
-  tilt:start:helm: tilt up -f tiltfiles/Tiltfile.helm
 
   gum:install:
   - |

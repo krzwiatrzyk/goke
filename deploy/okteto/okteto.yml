@@ -1,0 +1,21 @@
+# icon: https://apps.okteto.com/movies/icon.png
+build:
+  goke:
+    context: ../../app
+deploy:
+  - cat ../../charts/goke-okteto/* | envsubst | kubectl apply -f -
+  # - > 
+  #   helm upgrade --install goke ../../chart 
+  #   --set image.repository=${OKTETO_BUILD_GOKE_REGISTRY}/${OKTETO_BUILD_GOKE_REPOSITORY}
+  #   --set image.tag=${OKTETO_BUILD_GOKE_TAG}
+  #   --dependency-update  
+dev:
+  goke:
+    # command: ["bash"]
+    forward:
+      - 3000:3000
+    # sync:
+    #   - api:/usr/src/app
+
+# registry.cloud.okteto.net/krzwiatrzyk/okteto-goke@sha256:e2ee4c787c6f7f9152f9791b75bd5c75ce87ca4a736989b5a6e3907cd0ee629f
+# registry.cloud.okteto.net/krzwiatrzyk/okteto-goke:sha256:e2ee4c787c6f7f9152f9791b75bd5c75ce87ca4a736989b5a6e3907cd0ee629f

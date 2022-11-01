@@ -1,0 +1,12 @@
+version: 3
+
+tasks:
+  install:
+    cmds:
+    - curl https://get.okteto.com -sSfL | sh
+    status:
+    - command -v okteto
+  
+  up: okteto up
+  down: okteto destroy 
+  deploy: okteto deploy

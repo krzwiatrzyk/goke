@@ -1,3 +1,4 @@
+{{ if .Values.extensions.dapr }}
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
@@ -11,3 +12,4 @@ spec:
     value: localhost:6379
   - name: redisPassword
     value: ""
+{{ end }}

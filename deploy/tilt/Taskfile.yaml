@@ -1,0 +1,5 @@
+version: 3
+
+tasks:
+  start:compose: tilt up -f Tiltfile.compose
+  start:helm: tilt up -f Tiltfile.helm
