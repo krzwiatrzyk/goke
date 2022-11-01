@@ -68,7 +68,7 @@ func runGin() {
 
 	r.GET("/headers", returnHeaders)
 
-	r.Run(fmt.Sprintf(":%d", serverConfig.Port))
+	r.Run(fmt.Sprintf(":%d", 3000))
 }
 
 func returnHeaders(c *gin.Context) {

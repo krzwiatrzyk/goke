@@ -1,0 +1,19 @@
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    dev.okteto.com/generate-host: "true"
+  name: goke
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: goke
+            port:
+              number: 3000
+        path: /
+        pathType: Prefix

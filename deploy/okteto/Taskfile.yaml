@@ -10,3 +10,6 @@ tasks:
   up: okteto up
   down: okteto destroy 
   deploy: okteto deploy
+  build: okteto build
+
+  test: http https://goke-krzwiatrzyk.cloud.okteto.net/ping

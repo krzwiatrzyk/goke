@@ -2,6 +2,7 @@
 build:
   goke:
     context: ../../app
+    target: builder
 deploy:
   - cat ../../charts/goke-okteto/* | envsubst | kubectl apply -f -
   # - > 
@@ -11,7 +12,7 @@ deploy:
   #   --dependency-update  
 dev:
   goke:
-    # command: ["bash"]
+    # command: ["/app/goke"]
     forward:
       - 3000:3000
     # sync:

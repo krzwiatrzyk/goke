@@ -1,3 +1,5 @@
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,6 +21,8 @@ spec:
         image: ${OKTETO_BUILD_GOKE_IMAGE}
         ports:
         - containerPort: 3000
+        command:
+          - /app/goke
         args:
         - run
         - -m
