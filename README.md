@@ -32,29 +32,5 @@ pie showData
     "DAPR": 33.33
 ```
 
-```mermaid
-mindmap
-  root((Technologies))
-    HTTP
-    GIN
-    DAPR
-      Redis
-      ::icon(fas:fa-database)
-```
-
-```mermaid
-gitGraph
-    commit 
-    commit id: "A" tag: "v1.0.0"
-    branch develop
-    checkout develop
-    commit id: "Reverse" type: REVERSE
-    commit
-    checkout main
-    merge develop
-    commit id: "Highlight" type: HIGHLIGHT
-    commit
-```
-
 ## Repository Analytics 
 ![Alt](https://repobeats.axiom.co/api/embed/635cc8606359defc80b5e2dc5330d34ecdb316b2.svg "Repobeats analytics image")
