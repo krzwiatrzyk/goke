@@ -60,3 +60,13 @@ tasks:
 
   delete-downlaoded-modules:
   - go clean -modcache
+
+  ginkgo:install:
+  - go get github.com/onsi/ginkgo/v2/ginkgo
+  - go get github.com/onsi/gomega/...
+  - go install github.com/onsi/ginkgo/v2/ginkgo
+
+  ginkgo:bootstrap:
+    dir: modules/wallet
+    cmds:
+    - ginkgo bootstrap
