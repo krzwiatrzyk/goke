@@ -66,7 +66,15 @@ tasks:
   - go get github.com/onsi/gomega/...
   - go install github.com/onsi/ginkgo/v2/ginkgo
 
-  ginkgo:bootstrap:
+  ginkgo:bootstrap:wallet:
     dir: modules/wallet
     cmds:
     - ginkgo bootstrap
+    - ginkgo generate movie
+    - ginkgo generate wallet
+    - ginkgo generate account
+
+  ginkgo:test:wallet:
+    dir: modules/wallet
+    cmds:
+    - ginkgo
