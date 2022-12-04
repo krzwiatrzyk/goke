@@ -9,7 +9,7 @@ on:
 name: okteto-deploy
 
 jobs:
-  devflow:
+  deploy:
     environment: okteto
     runs-on: ubuntu-latest
     steps:
@@ -20,6 +20,12 @@ jobs:
       uses: okteto/context@latest
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: "Create namespace"
+      uses: okteto/create-namespace@latest
+      with:
+        namespace: goke
+        # members: rberrelleza,pchico83
 
     - name: "Activate Namespace"
       uses: okteto/namespace@latest
