@@ -1,10 +1,10 @@
 on:
   workflow_dispatch:
     branches:
-      - master 
+      - main
   push:
     branches:
-      - master
+      - main
 
 name: okteto-deploy
 
