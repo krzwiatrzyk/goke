@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: goke
-        image: ${OKTETO_BUILD_GOKE_IMAGE}
+        image: okteto.dev/goke:${OKTETO_GIT_COMMIT} # ${OKTETO_BUILD_GOKE_IMAGE}
         ports:
         - containerPort: 3000
         command:
