@@ -24,13 +24,13 @@ jobs:
     - name: "Create namespace"
       uses: okteto/create-namespace@latest
       with:
-        namespace: goke
+        namespace: goke-krzwiatrzyk
         # members: rberrelleza,pchico83
 
     - name: "Activate Namespace"
       uses: okteto/namespace@latest
       with:
-        namespace: goke
+        namespace: goke-krzwiatrzyk
 
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
