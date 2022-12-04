@@ -1,6 +1,10 @@
 # goke
 goke - Golang Kubernetes Example
 
+<a href="https://cloud.okteto.com/deploy?repository=https://github.com/okteto/movies&branch=main">
+  <img src="https://okteto.com/develop-okteto.svg" alt="Develop on Okteto">
+</a>
+
 - [goke](#goke)
   - [Diagrams](#diagrams)
   - [Repository Analytics](#repository-analytics)
