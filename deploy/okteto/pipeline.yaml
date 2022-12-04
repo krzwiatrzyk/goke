@@ -1,6 +1,7 @@
 icon: https://cdn.iconscout.com/icon/free/png-256/cyclone-dizzy-twister-typhoon-37957.png
 deploy:
   - okteto build -t okteto.dev/goke:${OKTETO_GIT_COMMIT} ../../app
-  - helm upgrade --install movies chart --set tag=${OKTETO_GIT_COMMIT}
+  - cat ../../charts/goke-okteto/* | envsubst | kubectl apply -f -
+  # - helm upgrade --install movies chart --set tag=${OKTETO_GIT_COMMIT}
 devs:
   - dev.yaml
