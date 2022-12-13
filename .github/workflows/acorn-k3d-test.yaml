@@ -1,0 +1,17 @@
+name: My Workflow
+on:
+  workflow_dispatch:
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: acorn-io/actions-setup@v1
+      - working-directory: deploy/acorn
+        run: |
+          acorn run -n goke . --mode gin
+          URL=$(acorn apps | grep goke | tr -s ' ' | cut -d ' ' -f 7)
+          echo $URL
+          curl $URL/ping
+        

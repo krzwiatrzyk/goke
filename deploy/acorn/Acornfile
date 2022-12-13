@@ -1,0 +1,23 @@
+// containers: {
+//  web: {
+//   image: "nginx"
+//   ports: publish: "80/http"
+//   files: {
+//    // Simple index.html file
+//    "/usr/share/nginx/html/index.html": "<h1>My First Acorn!</h1>"
+//   }
+//  }
+// }
+
+args: {
+    mode: "gin"
+}
+
+containers: {
+ goke: {
+    build: "../../app"
+    ports:
+      publish: "3000/http"
+    cmd: ["run", "-m", args.mode]
+ }
+}

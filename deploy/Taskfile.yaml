@@ -7,3 +7,6 @@ includes:
   tilt:
     dir: tilt
     taskfile: tilt/Taskfile.yaml
+  acorn:
+    dir: acorn 
+    taskfile: acorn/Taskfile.yaml

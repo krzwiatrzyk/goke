@@ -1,0 +1,62 @@
+version: 3
+
+tasks:
+  clean:
+    - k3d cluster delete acorn
+
+  install: 
+    cmds:
+    - brew install acorn-io/cli/acorn
+    status:
+    - command -v acorn
+
+  provision:k3d:
+    cmds:
+    - k3d cluster create acorn -c k3d-config.yaml
+    status:
+    - k3d cluster list | grep acorn
+
+  init:
+    deps:
+    - provision:k3d
+    - install
+    cmds:
+    - acorn install # --cluster-domain windkube.com
+  run: 
+    cmds:
+    - acorn run -n goke . --mode gin
+
+  run:dev:
+    cmds:
+    - acorn run -n goke -i . --mode gin
+
+  run:external:
+    cmds:
+    - acorn run --name awesome-acorn ghcr.io/acorn-io/getting-started:v0.0.1
+
+  list:
+  - acorn apps
+  
+  stop:
+  - acorn stop
+
+  start:
+  - acorn start
+
+  build:
+  - acorn build -t witcherek7/goke:v0.0.1-dev
+
+  push:
+  - acorn push witcherek7/goke:v0.0.1-dev 
+
+  login:
+  - acorn login hub.docker.io
+
+  exec:
+  - acorn exec goke goke
+
+  remove:
+  - acorn rm goke
+
+  update:
+  - acorn update goke --mode gin
