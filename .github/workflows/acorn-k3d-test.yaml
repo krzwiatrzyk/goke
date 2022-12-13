@@ -1,4 +1,4 @@
-name: My Workflow
+name: Acorn test
 on:
   workflow_dispatch:
     
