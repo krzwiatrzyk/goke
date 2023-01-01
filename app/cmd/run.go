@@ -10,7 +10,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	gokeGin "goke/modules/gin"
 	"github.com/spf13/cobra"
 )
 
@@ -48,7 +48,7 @@ func init() {
 func run() {
 	switch module {
 	case "gin":
-		runGin()
+		gokeGin.Run()
 	case "http":
 		runHttp()
 	default:
@@ -58,22 +58,8 @@ func run() {
 
 }
 
-func runGin() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
 
-	r.GET("/headers", returnHeaders)
 
-	r.Run(fmt.Sprintf(":%d", 3000))
-}
-
-func returnHeaders(c *gin.Context) {
-	c.JSON(http.StatusOK, c.Request.Header)
-}
 
 func runHttp() {
 	http.HandleFunc("/hello", hello)
